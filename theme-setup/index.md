@@ -323,4 +323,8 @@ Found a bug or aren't quite sure how something works? By all means Ping me on Tw
 
 ## License
 
+<<<<<<< HEAD
 This theme is free and open source software, distributed under the MIT License. So feel free to use this Jekyll theme on your site without linking back to me or including a disclaimer. 
+=======
+This theme is free and open source software, distributed under the MIT License. So feel free to use this Jekyll theme on your site without linking back to me or including a disclaimer. 
+>>>>>>> d4a097c7924c200c09baef92efb2c6212a3ab84e
