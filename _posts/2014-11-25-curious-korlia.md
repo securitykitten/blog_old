@@ -26,7 +26,6 @@ There isn't an obvious C2 address called out in strings, although there are some
 <figure>
 <img src="/images/korlia_strings.png">
 </figure>
-Given the little amount of public information on Korlia, this made it a good candidate for further research.
  
 Diving in deeper on our first string:
 <figure>
