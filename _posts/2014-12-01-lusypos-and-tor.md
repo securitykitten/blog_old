@@ -210,7 +210,7 @@ chrome.exe
 devenv.exe
 ~~~
 
-This contains the C2 information, along with a process whitelist, and registry keys for persistence.  One thing to note based on these strings, is that it looks like the malware may have taken a queue from dexter.
+This contains the C2 information, along with a process whitelist, and registry keys for persistence.  One thing to note based on these strings, is that it looks like the malware may have taken a cue from dexter.
 
 ###RAM Scraping
 RAM scraping is performed through the common sequence of using CreateToolhelp32Snapshot, then using Process32First and Process32Next to iterate.  Pseudocode for that would look something like the following:
