@@ -39,7 +39,7 @@ This malware clocks in around 4.0 MB in size, so it's not small.  For comparison
 
 The first thing of note when executing this in a sandbox is that this malware drops a copy of tor.exe, libcurl.dll, and zlib1.dll.  It also copies itself to the %APPDATA% directory on the victim host.  The following are the locations and MD5's of the dropped files are below:
 
-The file mbamservice is the copy of tor.exe
+The file mbambservice.exe is the copy of tor.exe
 
 ~~~
 d0f3b3aaa109a1ea8978c83d23055eb1  C:\Documents and Settings\<USER>\Application Data\VeriFone32\libcurl.dll 
