@@ -41,12 +41,12 @@ The first thing of note when executing this in a sandbox is that this malware dr
 
 The file mbamservice is the copy of tor.exe
 
-{% raw %}
+~~~
 d0f3b3aaa109a1ea8978c83d23055eb1  C:\Documents and Settings\<USER>\Application Data\VeriFone32\libcurl.dll 
 4407393c1542782bac2ba9d017f27dc9  C:\Documents and Settings\<USER>\Application Data\VeriFone32\mbambservice.exe
 bc7bf2584e3b039155265642268c94c7  C:\Documents and Settings\<USER>\Application Data\VeriFone32\verifone32.exe
 b8a9e91134e7c89440a0f95470d5e47b  C:\Documents and Settings\<USER>\Application Data\VeriFone32\zlib1.dll
-{% endraw %}
+~~~
 
 The malware will also create the mutex "prowin32Mutex" and injects code into iexplore.exe.  This was a strange mix of dexter-like behavior mixed with Chewbacca-like techniques.
 
@@ -56,13 +56,13 @@ The malware will also create the mutex "prowin32Mutex" and injects code into iex
 
 While running in a sandbox, the malware communicated out to 
 
-{% raw %}
+~~~
 86.59.21.38
 212.112.245.170
 128.31.0.39
 154.35.32.5
 193.23.244.244
-{% endraw %}
+~~~
 
 Now let's get to the good stuff.  
 
@@ -143,7 +143,7 @@ if __name__ == '__main__':
 
 Which when executed will decode the following strings:
 
-{% raw %}
+~~~
 http://kcdjqxk4jjwzjopq.onion/d/gw.php
 http://ydoapqgxeqmvsugz.onion/d/gw.php
 VeriFone32
@@ -208,14 +208,14 @@ wuauclt.exe
 firefox.exe
 chrome.exe
 devenv.exe
-{% endraw %}
+~~~
 
 This contains the C2 information, along with a process whitelist, and registry keys for persistence.  One thing to note based on these strings, is that it looks like the malware may have taken a queue from dexter.
 
 ###RAM Scraping
 RAM scraping is performed through the common sequence of using CreateToolhelp32Snapshot, then using Process32First and Process32Next to iterate.  Pseudocode for that would look something like the following:
 
-{% raw %}
+~~~
 handle = CreateToolhelp32Snapshot
 Process32First(handle)
 do 
@@ -226,7 +226,7 @@ do
  	CloseHandle
 	Sleep 5000
 while Process32Next
-{% endraw %}
+~~~
 
 This technique is not new and is commonly used in many different POS Ram scrapers.  Truth is, that without writing a driver, the malware authors often have their hands tied and only have a few techniques to peer into process memory space.
 
