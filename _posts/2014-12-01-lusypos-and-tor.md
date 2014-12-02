@@ -67,7 +67,7 @@ While running in a sandbox, the malware communicated out to
 Now let's get to the good stuff.  
 
 ###Decoding
-The malware has an interesting method of decoding strings that are statically in the binary.
+The malware has an interesting method of decoding strings that are statically defined in the binary.
 
 <figure>
 <img src="/images/lusypos_decode.png">
@@ -284,7 +284,7 @@ The malware also contains methods to search memory for sequences of data that lo
 <img src="/images/lusypos_regex.png">
 </figure>
 
-Once it finds that data, there are checks against the potential credit card number to determine if it is Luhn valid.  Luhn's algorithm is the defacto algorithm for validating credit card numbers.  It can be seen implemented in the malware using a lookup table rather than calcuating the digtial root.  One note, is that this is the same implementation of Luhn's as FrameworkPOS, Dexter, and getmypass.
+Once it finds that data, there are checks against the potential credit card number to determine if it is Luhn valid.  Luhn's algorithm is the defacto algorithm for validating credit card numbers.  It can be seen implemented in the malware using a lookup table rather than calcuating the digital root.  One note, is that this is the same implementation of Luhn's as FrameworkPOS, Dexter, and getmypass.
 
 <figure>
 <img src="/images/lusypos_luhns.png">
