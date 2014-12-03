@@ -14,14 +14,14 @@ date: 2014-12-02T20:34:49-05:00
 
 I recently noticed a new piece of malware that had made its way into the database.  The part that stuck out to me is that it runs checks to ensure that it's not being debugged or running in a sandbox.  While this is not a new trick by any means, it is something that I haven't seen in a while.  Let me explain.
 
-A handful of years ago, many big companies started investing money in virtual desktop solutions to combat malware and protect their employees from highly vulnerable attack vectors, such as web browsing and email.  As a result of this, many of the malware authors started to remove VM checking code from their malware samples.  Running in a virtual machine (if it's one somebody was using a desktop) is now OK.
+A handful of years ago, many big companies started investing money in virtual desktop solutions to combat malware and protect their employees from highly vulnerable attack vectors, such as web browsing and email.  As a result of this, many of the malware authors started to remove VM checking code from their malware samples.  Running in a virtual machine (if it's one somebody was using as a desktop) is now OK.
 
-The modern trend is to try and look for specific security tools or automated sandboxes, rather than asking the generic questions "am I running in a virtual machine".  There have been several well written posts about this topic. Some notable ones are 
+The modern trend is to try and look for specific security tools or automated sandboxes, rather than asking the generic question "am I running in a virtual machine?"  There have been several well written posts about this topic. Some notable ones are 
 
-* http://joe4security.blogspot.com/2012/08/vm-and-sandbox-detections-become-more.html
-* http://www.slideshare.net/mnajem/malware-detection-with-multiple-features
-* http://www.fireeye.com/resources/pdfs/fireeye-hot-knives-through-butter.pdf
-* http://www.codeproject.com/Articles/9823/Detect-if-your-program-is-running-inside-a-Virtual
+* [joe4security](http://joe4security.blogspot.com/2012/08/vm-and-sandbox-detections-become-more.html)
+* [slideshare](http://www.slideshare.net/mnajem/malware-detection-with-multiple-features)
+* [fireeye](http://www.fireeye.com/resources/pdfs/fireeye-hot-knives-through-butter.pdf)
+* [codeproject](http://www.codeproject.com/Articles/9823/Detect-if-your-program-is-running-inside-a-Virtual)
 
 I thought it would be useful to step through a piece of current malware and understand what's being used in the wild.  We'll also write some yara rules that will help look for this sort of activity. 
 
@@ -230,7 +230,7 @@ It will take the output of this function and divide it by 1073741824 to get the 
 ###Finding this Activity
 Looking for this behavior is not that difficult with a combination of a handful of yara rules.  Without going into the detail of each one, I've just uploaded them all to github.  Feel free to modify and use these any way you like.  If you have any useful additions, please contribute!
 
-https://github.com/securitykitten/public_yara_rules
+[https://github.com/securitykitten/public_yara_rules](https://github.com/securitykitten/public_yara_rules)
 
 ##Online Source
 A while back ago, I found a chunk of code online where the author made a little vm-checking class.  It has all the standard checks and some of the ones that we discussed in this post.
