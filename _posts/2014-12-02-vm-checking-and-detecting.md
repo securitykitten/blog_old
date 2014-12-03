@@ -172,7 +172,7 @@ The next VirtualBox check will look for a different key.  "HARDWARE\\Description
 This is followed by a check for GuestAdditions via a registry entry.  "SOFTWARE\\Oracle\\VirtualBox Guest Additions"
 
 <figure>
-<img src="/images/antivm_check_vbox_check.png">
+<img src="/images/antivm_check_vbox_guest.png">
 </figure>
 
 Another VirtualBox check happens by looking for the video drivers.  This happens again via the registry looking for the key "HARDWARE\\Description\\System" with value of "VideoBiosVersion" and data of "VIRTUALBOX"
