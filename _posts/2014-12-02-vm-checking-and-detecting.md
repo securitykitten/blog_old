@@ -115,7 +115,7 @@ The next piece of code will check for the existence of wine running on the machi
 </figure>
 
 ###Check Loaded DLL's
-After the wine check the malware will check for the following dlls loaded by calling GetModuleHandleA
+After the wine check the malware will search for the following dlls loaded by calling GetModuleHandleA
 
 * sbiedll.dll  (Sandboxie) 
 * dbghelp.dll  (vmware) 
@@ -125,35 +125,33 @@ After the wine check the malware will check for the following dlls loaded by cal
 * vmcheck.dll  (Virtual PC) 
 * wpespy.dll  (WPE Pro)
 
-Other sandboxes will be caught by the check in additions to the ones in the parentheses
+Other sandboxes will be caught by this in addition to the ones in parentheses.
 
 <figure>
 <img src="/images/antivm_check_dlls.png">
 </figure>
 
-Oddly enough, when this check completed, it'll check again for wine using the same code as above.  I'm assuming this is author error.
+Oddly enough, when this check completed, it'll look again for wine using the same code as above.  I'm assuming this is author error.
 
 ###Check VMWare
-After the second check for wine occurs the malware will check for VMWare by checking the following registry key "HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0" with the value of Identifier and the data of "VMWARE"
+After the second check for wine occurs the malware will look for VMWare by checking the following registry key "HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0" with the value of Identifier and the data of "VMWARE"
 
 <figure>
 <img src="/images/antivm_check_vmware.png">
 </figure>
 
-and finally
-
 <figure>
 <img src="/images/antivm_check_vmware_1.png">
 </figure>
 
-Another check after this one will check for the existence of the key "SOFTWARE\\VMware, Inc.\\VMware Tools"  Which is looking for existence of vmware tools being installed on the system.
+Another check after this one will check for the existence of the key "SOFTWARE\\VMware, Inc.\\VMware Tools" which is looking for existence of vmware tools being installed on the system.
 
 <figure>
 <img src="/images/antivm_check_vmware_tools.png">
 </figure>
 
 ###Check VBox
-After the checks for the VMware, the malware will now look for evidence of VirtualBox through the existence of some registry keys.  Similar to the VMWARE check, the malware will search for they key "HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0" with the value of "Identifier" and the data of "VBOX"  The first half of this function is identical to the VMware check that happened earlier.
+After the checks for the VMware, the malware will now look for evidence of VirtualBox through the existence of some registry keys.  Similar to the VMWARE check, the malware will search for the key "HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0" with the value of "Identifier" and the data of "VBOX"  The first half of this function is identical to the VMware check that happened earlier.
 
 <figure>
 <img src="/images/antivm_check_vbox.png">
@@ -185,10 +183,10 @@ Another VirtualBox check happens by looking for the video drivers.  This happens
 <img src="/images/antivm_check_virtualbox.png">
 </figure>
 
-This wraps up the checks for VirtualBox, now the malware will check for the existence of QEMU 
+This wraps up the checks for VirtualBox. Now the malware will check for the existence of QEMU. 
 
 ###Check QEMU
-The first check by checking the registry key "HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0" with the value of "Identifier" and the data of "QEMU" this is the same method as the 2 other checks.
+Hunting for QEMU is almost identical to the methods used when searching for VBox.  The first check is a look at the registry key "HARDWARE\\DEVICEMAP\\Scsi\\Scsi Port 0\\Scsi Bus 0\\Target Id 0\\Logical Unit Id 0" with the value of "Identifier" and the data of "QEMU".
 
 <figure>
 <img src="/images/antivm_check_qemu.png">
@@ -198,7 +196,7 @@ The first check by checking the registry key "HARDWARE\\DEVICEMAP\\Scsi\\Scsi Po
 <img src="/images/antivm_check_qemu_1.png">
 </figure>
 
-The next QEMU check is checking against the reg key "HARDWARE\\Description\\System" with a value of "SystemBiosVersion" and data of "QEMU"
+The next QEMU check is checking against the reg key "HARDWARE\\Description\\System" with a value of "SystemBiosVersion" and data of "QEMU".
 
 <figure>
 <img src="/images/antivm_check_qemu_2.png">
@@ -209,13 +207,13 @@ The next QEMU check is checking against the reg key "HARDWARE\\Description\\Syst
 </figure>
 
 ###Drive Size Check
-Now that the malware is finished checking registry keys it will do a final check to figure out the drive size.  There are a variety of ways that malware can accomplish this, but this particular sample is using DeviceIOControl.  The first thing that it does is get a handle to PhysicalDrive0 via CreateFileA
+Now that the malware is finished checking registry keys it will do a final audit to figure out the drive size.  There are a variety of ways that malware can accomplish this, but this particular sample is using DeviceIOControl.  The first thing that it does is get a handle to PhysicalDrive0 via CreateFileA.
 
 <figure>
 <img src="/images/antivm_check_phycheck.png">
 </figure>
 
-It will then use this handle and pass it to DeviceIOControl with the dwIOControlCode 7405C (IOCTL_DISK_GET_LENGTH_INFO)
+It will then use the returned handle and pass it to DeviceIOControl with the dwIOControlCode 7405C (IOCTL_DISK_GET_LENGTH_INFO)
 
 <figure>
 <img src="/images/antivm_check_phycheck_1.png">
@@ -233,9 +231,9 @@ Looking for this behavior is not that difficult with a combination of a handful 
 [https://github.com/securitykitten/public_yara_rules](https://github.com/securitykitten/public_yara_rules)
 
 ##Online Source
-A while back ago, I found a chunk of code online where the author made a little vm-checking class.  It has all the standard checks and some of the ones that we discussed in this post.
+A while back ago, I found a chunk of code in which the author made a little vm-checking class.  It has all the standard checks and some of the ones that we discussed in this post.
 
 {% gist securitykitten/26a326908d6f18170229 %}
 
 ##Conclusion
-While this is not a new tactic, it's interesting to see that some malware authors are still concerned with writing VM resistant code.  There is a shift towards avoiding sandbox technology and while this malware does display that activity, it also has broader checks that look for generic evidence of a VM.  
+While this is not a new tactic, it's interesting to see that some malware authors are still concerned with writing VM resistant code.  There is a shift toward avoiding sandbox technology and while this malware does display that activity, it also has broader checks that look for generic evidence of a VM.
