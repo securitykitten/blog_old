@@ -219,6 +219,16 @@ Then the results in notice.log
 #close	2015-01-03-15-59-15
 ~~~
 
+Update:
+These have recently been converted to snort signatures and are now included in the latest emerging-trojan.rules.  Thanks to the community for converting these!
+
+~~~
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"ET TROJAN Neutrino Checkin"; flow:to_server,established; content:"POST"; http_method; content:!"Referer|3a|"; http_header; content:"getcmd="; http_client_body; fast_pattern:only; content:"serial="; http_client_body; content:"nat="; http_client_body; content:"quality="; http_client_body; content:"av="; http_client_body; reference:md5,bef57db893b54c5605d0e3e7d50d6d70; reference:md5,bf555378d935de805f39c2d2d965a888; reference:url,securitykitten.github.io/an-evening-with-n3utrino/; classtype:trojan-activity; sid:2018580; rev:3;)
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"ET TROJAN Neutrino ping"; flow:to_server,established; content:"POST"; http_method; content:!"Accept"; http_header; content:!"Referer|3a|"; http_header; content:"ping=1|0a|"; depth:7; http_client_body; fast_pattern; content:"Content-Length|3a 20|7|0d 0a|"; nocase; http_header; threshold: type both, count 1, seconds 60, track by_src; reference:md5,bef57db893b54c5605d0e3e7d50d6d70; reference:md5,bf555378d935de805f39c2d2d965a888; reference:url,securitykitten.github.io/an-evening-with-n3utrino/; classtype:trojan-activity; sid:2019211; rev:3;)
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"ET TROJAN Neutrino Cookie"; flow:to_server,established; content:"21232f297a57a5a743894a0e4a801fc3"; http_cookie; reference:md5,bf555378d935de805f39c2d2d965a888; reference:url,securitykitten.github.io/an-evening-with-n3utrino/; classtype:trojan-activity; sid:2020093; rev:2;)
+alert http $HOME_NET any -> $EXTERNAL_NET any (msg:"ET TROJAN Neutrino CC dump"; flow:to_server,established; content:"POST"; http_method; content:"dumpgrab="; http_client_body; fast_pattern:only; content:"track_type="; http_client_body; content:"track_data="; http_client_body; content:"process_name="; http_client_body; content:!"Referer|3a|"; http_header; reference:md5,bf555378d935de805f39c2d2d965a888; reference:url,securitykitten.github.io/an-evening-with-n3utrino/; classtype:trojan-activity; sid:2020094; rev:2;)
+~~~
+
 ###Yara
 In addition to network signatures, N3utrino can be caught at the host level with the following rules.  This is a very simple rule but should suffice for the versions discussed in this post.  Diving down into each function would yield in higher fidelity signatures, but we'll save that as an excersise for another blog post.
 
